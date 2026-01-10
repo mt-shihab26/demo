@@ -1,6 +1,5 @@
 <div id="<%= dom_id(comment) %>" class="bg-white rounded-lg border border-gray-200 p-5">
   <div class="flex items-start space-x-4">
-    <!-- Avatar -->
     <div class="shrink-0">
       <div class="h-10 w-10 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -8,8 +7,6 @@
         </svg>
       </div>
     </div>
-
-    <!-- Comment Content -->
     <div class="flex-1 min-w-0">
       <div class="flex items-center justify-between mb-2">
         <div>
@@ -21,16 +18,14 @@
             <%= time_tag(comment.updated_at, "data-local": "time-ago") %>
           </div>
         </div>
-
         <!-- Actions (for future use) -->
         <div class="flex items-center space-x-2">
           <!-- Reply button placeholder -->
         </div>
       </div>
-
-      <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
-        <%= comment.content %>
-      </div>
     </div>
+  </div>
+  <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+    <%= comment.content %>
   </div>
 </div>

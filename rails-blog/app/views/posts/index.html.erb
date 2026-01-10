@@ -28,7 +28,7 @@
   <div id="posts" class="space-y-6">
     <% if @posts.any? %>
       <% @posts.each do |post| %>
-        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 overflow-hidden">
+        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div class="p-6">
             <%= render post %>
           </div>
