@@ -1,4 +1,4 @@
-<div id="<%= dom_id(comment) %>" class="bg-white rounded-lg border border-gray-200 p-5">
+<div id="<%= dom_id(comment) %>" data-controller="toggle" class="bg-white rounded-lg border border-gray-200 p-5">
   <div class="flex items-start space-x-4">
     <div class="shrink-0">
       <div class="h-10 w-10 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold">
@@ -20,7 +20,7 @@
         </div>
         <!-- Actions -->
         <div class="flex items-center space-x-2">
-          <%= button_to comment_path(comment), method: :delete,
+          <%= button_to post_comment_path(comment.post, comment), method: :delete,
               data: { turbo_confirm: "Are you sure you want to delete this comment?" },
               class: "text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg p-2 transition-colors duration-200",
               title: "Delete comment" do %>
@@ -30,9 +30,32 @@
           <% end %>
         </div>
       </div>
+      <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap mb-3">
+        <%= comment.content %>
+      </div>
+      <button data-action="click->toggle#reply" data-target="<%= dom_id(comment, :reply_form) %>" class="text-blue-600 hover:text-blue-800 text-xs font-medium flex items-center">
+        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+        </svg>
+        Reply
+      </button>
     </div>
   </div>
-  <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
-    <%= comment.content %>
+
+  <!-- Reply Form (Hidden by default) -->
+  <div id="<%= dom_id(comment, :reply_form) %>" class="hidden mt-4 ml-14 bg-gray-50 rounded-lg border border-gray-200 p-4">
+    <%= form_with model: [comment.post, Comment.new], local: true, class: "space-y-3" do |form| %>
+      <%= form.text_area :content,
+          rows: 3,
+          placeholder: "Write your reply...",
+          required: true,
+          class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:ring-2 focus:ring-offset-2 focus:border-blue-500 focus:ring-blue-500 resize-none" %>
+      <div class="flex items-center justify-between">
+        <%= form.submit "Post Reply", class: "inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm transition-colors duration-200 cursor-pointer" %>
+        <button type="button" data-action="click->toggle#cancel" data-target="<%= dom_id(comment, :reply_form) %>" class="text-gray-600 hover:text-gray-800 text-sm font-medium">
+          Cancel
+        </button>
+      </div>
+    <% end %>
   </div>
 </div>
