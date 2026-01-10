@@ -1,6 +1,36 @@
-<div id="<%= dom_id(comment) %>" class="bg-gray-50 rounded-md p-4 border border-gray-200">
-  <div class="text-gray-800 mb-2">
-    <%= comment.content %>
+<div id="<%= dom_id(comment) %>" class="bg-white rounded-lg border border-gray-200 p-5">
+  <div class="flex items-start space-x-4">
+    <!-- Avatar -->
+    <div class="shrink-0">
+      <div class="h-10 w-10 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Comment Content -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <p class="text-sm font-semibold text-gray-900">Anonymous User</p>
+          <div class="flex items-center text-xs text-gray-500 mt-0.5">
+            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <%= time_tag(comment.updated_at, "data-local": "time-ago") %>
+          </div>
+        </div>
+
+        <!-- Actions (for future use) -->
+        <div class="flex items-center space-x-2">
+          <!-- Reply button placeholder -->
+        </div>
+      </div>
+
+      <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+        <%= comment.content %>
+      </div>
+    </div>
   </div>
-  <%= time_tag(comment.updated_at, "data-local": "time-ago", class: "text-sm text-gray-500") %>
 </div>
