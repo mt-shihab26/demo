@@ -1,27 +1,55 @@
-<%= form_with(model: post, class: "contents") do |form| %>
+<%= form_with(model: post, class: "space-y-6") do |form| %>
   <% if post.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul class="list-disc ml-6">
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div id="error_explanation" class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <div class="flex items-start">
+        <svg class="w-5 h-5 text-red-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        <div>
+          <h3 class="text-sm font-semibold text-red-800 mb-2">
+            <%= pluralize(post.errors.count, "error") %> prevented this post from being saved:
+          </h3>
+          <ul class="list-disc list-inside text-sm text-red-700 space-y-1">
+            <% post.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": post.errors[:title].none?, "border-red-400 focus:outline-red-600": post.errors[:title].any?}] %>
+  <div class="space-y-2">
+    <%= form.label :title, class: "block text-sm font-semibold text-gray-700" do %>
+      Title <span class="text-red-500">*</span>
+    <% end %>
+    <%= form.text_field :title,
+        placeholder: "Enter your post title...",
+        class: ["block w-full rounded-lg border px-4 py-3 text-gray-900 shadow-sm transition-colors focus:ring-2 focus:ring-offset-2",
+                {"border-gray-300 focus:border-blue-500 focus:ring-blue-500": post.errors[:title].none?,
+                 "border-red-300 focus:border-red-500 focus:ring-red-500": post.errors[:title].any?}] %>
+    <% if post.errors[:title].any? %>
+      <p class="text-sm text-red-600 mt-1"><%= post.errors[:title].first %></p>
+    <% end %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :body %>
-    <%= form.rich_textarea :body, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": post.errors[:body].none?, "border-red-400 focus:outline-red-600": post.errors[:body].any?}] %>
+  <div class="space-y-2">
+    <%= form.label :body, class: "block text-sm font-semibold text-gray-700" do %>
+      Content <span class="text-red-500">*</span>
+    <% end %>
+    <%= form.rich_textarea :body,
+        rows: 12,
+        placeholder: "Write your post content here...",
+        class: ["block w-full rounded-lg border px-4 py-3 text-gray-900 shadow-sm transition-colors focus:ring-2 focus:ring-offset-2",
+                {"border-gray-300 focus:border-blue-500 focus:ring-blue-500": post.errors[:body].none?,
+                 "border-red-300 focus:border-red-500 focus:ring-red-500": post.errors[:body].any?}] %>
+    <% if post.errors[:body].any? %>
+      <p class="text-sm text-red-600 mt-1"><%= post.errors[:body].first %></p>
+    <% end %>
   </div>
 
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <div class="flex items-center gap-3 pt-4 border-t border-gray-200">
+    <%= form.submit class: "inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm transition-colors duration-200 cursor-pointer" %>
+    <p class="text-sm text-gray-500">or press <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded">Cmd+Enter</kbd></p>
   </div>
 <% end %>
