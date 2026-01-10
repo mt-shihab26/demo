@@ -1,7 +1,6 @@
 <% content_for :title, "Editing post" %>
 
 <div class="max-w-4xl mx-auto">
-  <!-- Header -->
   <div class="mb-8">
     <div class="flex items-center gap-4 mb-4">
       <%= link_to @post, class: "inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors" do %>
@@ -18,7 +17,6 @@
     <p class="text-gray-600">Make changes to your post</p>
   </div>
 
-  <!-- Form Card -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
     <%= render "form", post: @post %>
   </div>
