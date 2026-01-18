@@ -1,0 +1,47 @@
+name: linter
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install PHP Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install TypeScript Dependencies
+        run: bun install
+
+      - name: Run PHP Formatter
+        run: composer run-script format
+
+      - name: Run PHP Linter
+        run: composer run-script lint
+
+      - name: Run TypeScript Formatter
+        run: bun run format
+
+      - name: Run TypeScript Linter
+        run: bun run lint
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix code style
+          commit_options: '--no-verify'
