@@ -6,15 +6,14 @@ new class extends Component
 {
     public $count = 0;
 
-    public function increment()
+    public function increment(int $by)
     {
-        $this->count++;
+        $this->count += $by;
     }
 };
 ?>
 
 <div>
-    <button type="button" wire:click="increment">Increment</button>
-
     <div>Count: {{ $count }} </div>
+    <button type="button" wire:click="increment(2)">Increment By 2</button>
 </div>
