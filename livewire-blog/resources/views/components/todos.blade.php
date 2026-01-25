@@ -32,7 +32,8 @@ new class extends Component
             type="test"
             class="flex-1 px-3 rounded-none py-2 border border-gray-300"
             {{-- wire:model.live.debounce.5ms="todo" --}}
-            wire:model.change="todo"
+            {{-- wire:model.change="todo" --}}
+            wire:model.blur="todo"
         />
         <button
             type="submit"
