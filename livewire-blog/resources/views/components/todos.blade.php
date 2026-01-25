@@ -6,10 +6,25 @@ new class extends Component
 {
     public string $todo = '';
 
-    public $todos = [
-        'Take out trash',
-        'Do dishes',
-    ];
+    public $todos = [];
+
+    public function mount()
+    {
+        $this->todos = [
+            'Take out trash',
+            'Do dishes',
+        ];
+    }
+
+    // public function updated($property, $value)
+    // {
+    //     $this->$property = $value;
+    // }
+
+    public function updatedTodo($value)
+    {
+        $this->todo = strtoupper($value);
+    }
 
     public function add()
     {
@@ -33,7 +48,8 @@ new class extends Component
             class="flex-1 px-3 rounded-none py-2 border border-gray-300"
             {{-- wire:model.live.debounce.5ms="todo" --}}
             {{-- wire:model.change="todo" --}}
-            wire:model.blur="todo"
+            {{-- wire:model.blur="todo" --}}
+            wire:model="todo"
         />
         <button
             type="submit"
