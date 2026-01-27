@@ -27,9 +27,7 @@ new class extends Component
 <div class="max-w-6xl">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-gray-900">Posts</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-            + Add Post
-        </button>
+        <livewire:posts.create />
     </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
