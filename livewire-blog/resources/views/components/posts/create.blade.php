@@ -6,10 +6,10 @@ use Livewire\Component;
 
 new class extends Component
 {
-    #[Rule(['required', 'string', 'max: 255'], as: 'da title')]
+    #[Rule('required|string|max:255', as: 'title')]
     public string $title = '';
 
-    #[Rule(['required', 'string'], as: 'body')]
+    #[Rule('required|string', as: 'content')]
     public string $content = '';
 
     public function save()
