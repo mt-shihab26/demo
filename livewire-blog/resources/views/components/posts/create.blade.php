@@ -60,29 +60,8 @@ new class extends Component
                 class="p-4 space-y-4"
                 wire:submit="save"
             >
-                <label class="block">
-                    <span class="block text-sm font-medium text-gray-700 mb-1">Title</span>
-                    <input
-                        type="text"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                        wire:model="title"
-                    />
-                    @error("title")
-                        <em>{{ $message }}</em>
-                    @enderror
-                </label>
-                <label class="block">
-                    <span class="block text-sm font-medium text-gray-700 mb-1">Content</span>
-                    <textarea
-                        rows="4"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-                        wire:model="content"
-                    >
-                    </textarea>
-                    @error("content")
-                        <em>{{ $message }}</em>
-                    @enderror
-                </label>
+                <x-form.input label="Title" name="title" />
+                <x-form.textarea label="Content" name="content" />
                 <div class="flex justify-end gap-3 p-4">
                     <button
                         type="button"
