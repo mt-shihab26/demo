@@ -86,7 +86,7 @@ new class extends Component
                     {{ $post ? "Update Post" : "Create Post 2" }}
                 </h3>
                 <button
-                    class="text-gray-400 hover:text-gray-600"
+                    class="text-gray-400 cursor-pointer hover:text-gray-600"
                     @click="show = !show"
                 >
                     <x-icons.close class="w-5 h-5" />
@@ -111,14 +111,14 @@ new class extends Component
                 <div class="flex justify-end gap-3 p-4">
                     <button
                         type="button"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                        class="px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg"
                         @click="show = !show"
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
-                        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+                        class="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
                     >
                         {{ $post ? "Update Post" : "Create Post" }}
                     </button>
