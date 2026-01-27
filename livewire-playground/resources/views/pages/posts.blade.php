@@ -5,6 +5,8 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public string $sort = 'latest';
+
     public function delete(Post $post)
     {
         $post->delete();
@@ -12,12 +14,13 @@ new class extends Component
 
     public function render()
     {
-        $data = [
-            'posts' => Post::all(),
-        ];
+        $posts = Post::query()
+            ->when($this->sort === 'latest', fn ($q) => $q->latest())
+            ->when($this->sort === 'oldest', fn ($q) => $q->oldest())
+            ->get();
 
         return $this
-            ->view($data)
+            ->view(['posts' => $posts])
             ->layout('layouts.app')
             ->title('Posts');
     }
@@ -29,6 +32,16 @@ new class extends Component
         <h1 class="text-2xl font-bold text-gray-900">Posts</h1>
         <livewire:screens.posts.form @post-created="$refresh" />
     </div>
+
+    <div>
+        <div>
+            <select id="sort" name="sort" wire:model.live="sort">
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
+                <option value="popular">Popular</option>
+            </select>
+        </div>
+    <div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">

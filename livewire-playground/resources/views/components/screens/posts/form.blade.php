@@ -116,7 +116,7 @@ new class extends Component
                         @click="show = !show"
                     />
                     <x-form.submit
-                        :icon="$post ? 'edit' : 'plus'"
+                        :icon="$post ? 'update' : 'save'"
                         :label="$post ? 'Update Post' : 'Create Post'"
                     />
                 </div>
