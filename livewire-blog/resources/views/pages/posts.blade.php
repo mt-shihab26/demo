@@ -46,13 +46,8 @@ new class extends Component
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $post->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post->title }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                                class="text-blue-600 hover:text-blue-900 p-1"
-                                title="Edit"
-                            >
-                                <x-icons.edit class="w-5 h-5" />
-                            </button>
+                        <td class="px-6 py-4 whitespace-nowrap text-right flex items-center text-sm font-medium">
+                            <livewire:screens.posts.edit :post="$post" @post-updated="$refresh" />
                             <button
                                 class="text-red-600 hover:text-red-900 p-1"
                                 title="Delete"
