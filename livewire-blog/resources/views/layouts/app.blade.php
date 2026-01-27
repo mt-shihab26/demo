@@ -10,8 +10,12 @@
 
         @livewireStyles
     </head>
-    <body>
-        {{ $slot }}
+    <body class="bg-gray-100 min-h-screen">
+        @include("partils/layouts/app/sidebar")
+
+        <main class="ml-64 p-6">
+            {{ $slot }}
+        </main>
 
         @livewireScripts
     </body>

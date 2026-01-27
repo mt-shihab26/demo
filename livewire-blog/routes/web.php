@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::livewire('/', 'pages::welcome');
-Route::livewire('/counter', 'pages::counter');
-Route::livewire('/todos', 'pages::todos');
+Route::livewire('/', 'pages::welcome')->name('home');
+Route::livewire('/counter', 'pages::counter')->name('counter');
+Route::livewire('/todos', 'pages::todos')->name('todos');

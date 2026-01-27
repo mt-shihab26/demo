@@ -18,8 +18,12 @@ new class extends Component
 };
 ?>
 
-<div class="flex flex-col">
+<div>
     <div>Count: {{ $count }} </div>
-    <button class="cursor-pointer" type="button" wire:click="increment(2)">Increment By 2</button>
-    <button class="cursor-pointer"  type="button" wire:click="decrement(2)">Decrement By 2</button>
+    <div>
+        <button class="cursor-pointer" type="button" wire:click="increment(2)">Increment By 2</button>
+    </div>
+    <div>
+        <button class="cursor-pointer"  type="button" wire:click="decrement(2)">Decrement By 2</button>
+    </div>
 </div>
