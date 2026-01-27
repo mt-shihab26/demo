@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Livewire\Component;
 
 new class extends Component
@@ -7,23 +8,7 @@ new class extends Component
     public function render()
     {
         $data = [
-            'posts' => [
-                [
-                    'id' => 1,
-                    'title' => 'Hello World',
-                    'content' => 'Welcome this is livewire application',
-                ],
-                [
-                    'id' => 2,
-                    'title' => 'Getting Started with Livewire',
-                    'content' => 'Livewire is a full-stack framework for Laravel that makes building dynamic interfaces simple.',
-                ],
-                [
-                    'id' => 3,
-                    'title' => 'Tailwind CSS Tips',
-                    'content' => 'Learn how to create beautiful designs with utility-first CSS framework.',
-                ],
-            ],
+            'posts' => Post::all(),
         ];
 
         return $this
@@ -34,7 +19,7 @@ new class extends Component
 };
 ?>
 
-<div class="max-w-6xl mx-auto">
+<div class="max-w-6xl">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-gray-900">Posts</h1>
         <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
@@ -55,9 +40,9 @@ new class extends Component
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($posts as $post)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $post['id'] }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post['title'] }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post['content'] }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $post->id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post->title }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button class="text-blue-600 hover:text-blue-900 p-1" title="Edit">
                                 <x-icons.edit class="w-5 h-5" />
