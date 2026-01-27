@@ -5,9 +5,9 @@ use Livewire\Component;
 
 new class extends Component
 {
-    public function delete($id)
+    public function delete(Post $post)
     {
-        Post::find($id)?->delete();
+        $post->delete();
     }
 
     public function render()
