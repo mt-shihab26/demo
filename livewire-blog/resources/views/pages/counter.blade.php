@@ -10,7 +10,7 @@ new #[Layout('layouts.app', ['title' => 'Counter'])] class extends Component
 ?>
 
 <div>
-    <livewire:counter />
+    <livewire:screens.counter />
 
     <div x-data="{ count: 0 }" class="mt-10">
         <span x-text="count"></span>
