@@ -31,3 +31,13 @@ it('can create new post', function () {
     assertEquals('Some title', $post->title);
     assertEquals('Some content', $post->content);
 });
+
+it('title is required', function () {
+    User::factory()->create();
+
+    Livewire::test('screens.posts.create')
+        ->set('title', '')
+        ->set('content', 'Some content')
+        ->call('save')
+        ->assertHasErrors(['title' => 'required']);
+});
