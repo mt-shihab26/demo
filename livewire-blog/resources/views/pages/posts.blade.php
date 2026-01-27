@@ -60,6 +60,7 @@ new class extends Component
                                 title="Delete"
                                 type="button"
                                 wire:click="delete({{ $post->id }})"
+                                wire:confirm="Are you sure, you want to delete this '#{{ $post->id }}' post?"
                             >
                                 <x-icons.delete class="w-5 h-5" />
                             </button>
