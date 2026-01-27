@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\Post;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 
-new class extends Component
+new #[Lazy] class extends Component
 {
     public string $sort = 'latest';
 
@@ -28,6 +29,19 @@ new class extends Component
     }
 };
 ?>
+
+@placeholder
+<div class="max-w-6xl">
+    <div class="flex items-center justify-between mb-6">
+        <x-ui.skeleton class="h-8 w-32" />
+        <x-ui.skeleton class="h-10 w-28 rounded-lg" />
+    </div>
+    <div class="mb-4 flex justify-end">
+        <x-ui.skeleton class="h-10 w-32 rounded-lg" />
+    </div>
+    <x-table.skeleton :rows="5" :cols="4" />
+</div>
+@endplaceholder
 
 <div class="max-w-6xl">
     <div class="flex items-center justify-between mb-6">
