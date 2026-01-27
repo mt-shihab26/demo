@@ -11,14 +11,13 @@ new class extends Component
 
     public function save()
     {
-        $post = User::query()->first()->posts()->create([
+        User::query()->first()->posts()->create([
             'title' => $this->title,
             'content' => $this->content,
         ]);
 
+        $this->reset(['title', 'content']);
         $this->dispatch('post-created');
-
-        return redirect()->back()->with('success', 'Post created successfully!');
     }
 };
 ?>
