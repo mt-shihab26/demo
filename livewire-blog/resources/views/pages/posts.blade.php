@@ -5,6 +5,11 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public function delete($id)
+    {
+        Post::find($id)?->delete();
+    }
+
     public function render()
     {
         $data = [
@@ -34,7 +39,7 @@ new class extends Component
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -44,10 +49,18 @@ new class extends Component
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post->title }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button class="text-blue-600 hover:text-blue-900 p-1" title="Edit">
+                            <button
+                                class="text-blue-600 hover:text-blue-900 p-1"
+                                title="Edit"
+                            >
                                 <x-icons.edit class="w-5 h-5" />
                             </button>
-                            <button class="text-red-600 hover:text-red-900 p-1" title="Delete">
+                            <button
+                                class="text-red-600 hover:text-red-900 p-1"
+                                title="Delete"
+                                type="button"
+                                wire:click="delete({{ $post->id }})"
+                            >
                                 <x-icons.delete class="w-5 h-5" />
                             </button>
                         </td>
