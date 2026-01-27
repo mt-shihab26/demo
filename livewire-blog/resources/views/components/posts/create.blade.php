@@ -62,8 +62,18 @@ new class extends Component
             >
                 <div>Current Title: <span x-text="$wire.title"></span></div>
                 <div @click="$wire.save()">Submit Form</div>
-                <x-form.input label="Title" name="title" placeholder="Enter post title..." />
-                <x-form.textarea label="Content" name="content" placeholder="Write your content here..." />
+                <x-form.input
+                    label="Title"
+                    name="title"
+                    placeholder="Enter post title..."
+                />
+                <x-form.textarea
+                    label="Content"
+                    name="content"
+                    placeholder="Write your content here..."
+                    show-characters
+                    show-words
+                />
                 <div class="flex justify-end gap-3 p-4">
                     <button
                         type="button"
