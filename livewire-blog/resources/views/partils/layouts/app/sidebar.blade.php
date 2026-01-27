@@ -15,6 +15,11 @@ $links = [
         'route' => 'todos',
         'icon' => 'todos',
     ],
+    [
+        'label' => 'Posts',
+        'route' => 'posts',
+        'icon' => 'posts',
+    ],
 ];
 ?>
 
@@ -23,13 +28,15 @@ $links = [
         <nav class="flex-1 px-3 py-4 overflow-y-auto">
             <ul class="space-y-2">
                 @foreach($links as $link)
-                    <li>
+                    <li wire:key="{{ $link['route'] }}">
                         <a
                             href="{{ route($link['route']) }}"
                             wire:navigate
                             class="flex items-center underline px-4 py-3 text-gray-600 rounded-lg transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 {{ request()->routeIs($link['route']) ? 'bg-gray-100 text-gray-900' : '' }}"
                     >
-                            <x-dynamic-component :component="'icons.' . $link['icon']" class="w-5 h-5" />
+                            @if(\Illuminate\Support\Facades\View::exists('components.icons.' . $link['icon']))
+                                <x-dynamic-component :component="'icons.' . $link['icon']" class="w-5 h-5" />
+                            @endif
                             <span class="ml-3 font-medium">{{ $link['label'] }}</span>
                         </a>
                     </li>
