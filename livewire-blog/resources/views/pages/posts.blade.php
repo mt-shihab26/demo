@@ -39,7 +39,7 @@ new class extends Component
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($posts as $post)
-                    <tr class="hover:bg-gray-50">
+                    <tr wire:key="{{ $post->id }}" class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $post->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post->title }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
