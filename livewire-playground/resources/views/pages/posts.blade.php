@@ -14,6 +14,8 @@ new class extends Component
 
     public function render()
     {
+        sleep(1);
+
         $posts = Post::query()
             ->when($this->sort === 'latest', fn ($q) => $q->latest())
             ->when($this->sort === 'oldest', fn ($q) => $q->oldest())
@@ -33,15 +35,16 @@ new class extends Component
         <livewire:screens.posts.form @post-created="$refresh" />
     </div>
 
-    <div>
-        <div>
-            <select id="sort" name="sort" wire:model.live="sort">
-                <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option>
-                <option value="popular">Popular</option>
-            </select>
-        </div>
-    <div>
+    <div class="mb-4 flex justify-end">
+        <x-table.select
+            name="sort"
+            :options="[
+                [ 'value' => 'latest', 'label' => 'Latest' ],
+                [ 'value' => 'oldest', 'label' => 'Oldest' ],
+                [ 'value' => 'popular', 'label' => 'Popular' ],
+            ]"
+        />
+    </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
