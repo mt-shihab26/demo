@@ -111,7 +111,7 @@ new class extends Component
                     show-characters
                     show-words
                 />
-                <div class="flex justify-end gap-3 p-4">
+                <div class="flex justify-end gap-3">
                     <x-form.cancel
                         @click="show = !show"
                     />
