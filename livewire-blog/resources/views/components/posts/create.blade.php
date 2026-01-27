@@ -60,6 +60,8 @@ new class extends Component
                 class="p-4 space-y-4"
                 wire:submit="save"
             >
+                <div>Current Title: <span x-text="$wire.title"></span></div>
+                <div @click="$wire.save()">Submit Form</div>
                 <x-form.input label="Title" name="title" placeholder="Enter post title..." />
                 <x-form.textarea label="Content" name="content" placeholder="Write your content here..." />
                 <div class="flex justify-end gap-3 p-4">
