@@ -38,6 +38,7 @@ new class extends Component
     <div class="mb-4 flex justify-end">
         <x-table.select
             name="sort"
+            data-dim-sorting
             :options="[
                 [ 'value' => 'latest', 'label' => 'Latest' ],
                 [ 'value' => 'oldest', 'label' => 'Oldest' ],
@@ -46,7 +47,7 @@ new class extends Component
         />
     </div>
 
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white rounded-lg shadow overflow-hidden [*:has([data-dim-sorting][data-loading])_&]:opacity-50">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
