@@ -1,10 +1,25 @@
 <?php
 
+use App\Models\User;
 use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public string $title = '';
+
+    public string $content = '';
+
+    public function save()
+    {
+        $post = User::query()->first()->posts()->create([
+            'title' => $this->title,
+            'content' => $this->content,
+        ]);
+
+        $this->dispatch('post-created');
+
+        return redirect()->back()->with('success', 'Post created successfully!');
+    }
 };
 ?>
 
@@ -20,6 +35,7 @@ new class extends Component
         x-show="show"
         x-cloak
         x-transition
+        x-on:post-created.window="show = !show"
     >
         <div
             class="fixed inset-0 bg-black/50"
@@ -36,14 +52,26 @@ new class extends Component
                     <x-icons.close class="w-5 h-5" />
                 </button>
             </div>
-            <form class="p-4 space-y-4">
+            <form
+                class="p-4 space-y-4"
+                wire:submit="save"
+            >
                 <label class="block">
                     <span class="block text-sm font-medium text-gray-700 mb-1">Title</span>
-                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                    <input
+                        type="text"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                        wire:model="title"
+                    />
                 </label>
                 <label class="block">
                     <span class="block text-sm font-medium text-gray-700 mb-1">Content</span>
-                    <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"></textarea>
+                    <textarea
+                        rows="4"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                        wire:model="content"
+                    >
+                    </textarea>
                 </label>
                 <div class="flex justify-end gap-3 p-4">
                     <button
