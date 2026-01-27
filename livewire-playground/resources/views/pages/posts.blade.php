@@ -39,7 +39,7 @@ new #[Lazy] class extends Component
     <div class="mb-4 flex justify-end">
         <x-ui.skeleton class="h-10 w-32 rounded-lg" />
     </div>
-    <x-table.skeleton :rows="5" :cols="4" />
+    <x-table.skeleton :rows="10" :cols="4" />
 </div>
 @endplaceholder
 
