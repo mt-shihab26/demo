@@ -23,6 +23,8 @@ new class extends Component
 
     public function save()
     {
+        sleep(1);
+
         $this->validate();
 
         User::query()->first()->posts()->create([
@@ -61,9 +63,10 @@ new class extends Component
     @else
         <button
             @click="show = !show"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+            class="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
         >
-            + Add Post
+            <x-icons.plus class="w-5 h-5" />
+            Add Post
         </button>
     @endif
 
@@ -116,12 +119,9 @@ new class extends Component
                     >
                         Cancel
                     </button>
-                    <button
-                        type="submit"
-                        class="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
-                    >
-                        {{ $post ? "Update Post" : "Create Post" }}
-                    </button>
+                    <x-form.submit :icon="$post ? 'edit' : 'plus'">
+                        {{ $post ? 'Update Post' : 'Create Post' }}
+                    </x-form.submit>
                 </div>
             </form>
         </div>
