@@ -10,7 +10,7 @@
 
         @livewireStyles
     </head>
-    <body class="bg-gray-100 min-h-screen">
+    <body class="bg-white min-h-screen">
         @include("partils/layouts/app/sidebar")
 
         <main class="ml-64 p-6">
