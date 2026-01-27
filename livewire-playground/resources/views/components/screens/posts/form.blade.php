@@ -112,16 +112,13 @@ new class extends Component
                     show-words
                 />
                 <div class="flex justify-end gap-3 p-4">
-                    <button
-                        type="button"
-                        class="px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                    <x-form.cancel
                         @click="show = !show"
-                    >
-                        Cancel
-                    </button>
-                    <x-form.submit :icon="$post ? 'edit' : 'plus'">
-                        {{ $post ? 'Update Post' : 'Create Post' }}
-                    </x-form.submit>
+                    />
+                    <x-form.submit
+                        :icon="$post ? 'edit' : 'plus'"
+                        :label="$post ? 'Update Post' : 'Create Post'"
+                    />
                 </div>
             </form>
         </div>

@@ -1,4 +1,4 @@
-@props(['icon' => null])
+@props(['icon' => null, "label" => ""])
 
 <button
     type="submit"
@@ -8,5 +8,5 @@
     @if($icon)
         <x-dynamic-component :component="'icons.' . $icon" class="in-data-loading:hidden size-4" />
     @endif
-    {{ $slot }}
+    {{ $label }}
 </button>
