@@ -84,14 +84,14 @@ new #[Lazy] class extends Component
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($posts as $post)
-                <livewire:screens.posts.post :wire:key="$post->id" :post="$post" >
-                    <livewire:slot name="checkbox">
-                        hello
-                    </livewire:slot>
-                    <livewire:slot name="edit">
-                        <livewire:screens.posts.form :post="$post" @post-updated="$refresh" />
-                    </livewire:slot>
-                </livewire:screens.posts.post>
+                    <livewire:screens.posts.post :wire:key="$post->id" :post="$post" >
+                        <livewire:slot name="checkbox">
+                            hello
+                        </livewire:slot>
+                        <livewire:slot name="edit">
+                            <livewire:screens.posts.form :post="$post" @post-updated="$refresh" />
+                        </livewire:slot>
+                    </livewire:screens.posts.post>
                 @endforeach
             </tbody>
         </table>
