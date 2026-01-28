@@ -54,9 +54,16 @@ new #[Lazy] class extends Component
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-gray-900">Posts</h1>
         <div class="flex items-center space-x-2">
-            <div wire:show="selected.length > 0">
-                <button wire:click="deleteSelected">Delete</button>
-                <div wire:text="selected.length"></div>
+            <div wire:show="selected.length > 0" class="flex items-center gap-2">
+                <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800" wire:text="selected.length + ' selected'"></span>
+                <button
+                    wire:click="deleteSelected"
+                    wire:confirm="Are you sure you want to delete the selected posts?"
+                    class="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                >
+                    <x-icons.delete class="h-4 w-4" />
+                    Delete
+                </button>
             </div>
             <x-table.select
                 name="sort"
