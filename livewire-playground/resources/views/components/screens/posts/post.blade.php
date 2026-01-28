@@ -11,9 +11,7 @@ new class extends Component
 
 <tr class="hover:bg-gray-50">
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        @if ($slots->has('checkbox'))
-            {{ $slots['checkbox'] }}
-        @endif
+        <input type="checkbox" wire:model="$parent.selected" value="{{ $post->id }}" />
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
         {{ $post->id }}
