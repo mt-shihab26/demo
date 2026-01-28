@@ -9,16 +9,16 @@ new class extends Component
 };
 ?>
 
-<tr class="hover:bg-gray-50">
-    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+<tr class="hover:bg-gray-50 py-1">
+    <td class="px-6 whitespace-nowrap text-sm text-gray-500">
         <x-table.checkbox  :value="$post->id" model="$parent.selected" />
     </td>
-    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+    <td class="px-6 whitespace-nowrap text-sm text-gray-500">
         {{ $post->id }}
     </td>
-    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $post->title }}</td>
-    <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
-    <td class="px-6 py-4 whitespace-nowrap text-right flex items-center text-sm font-medium">
+    <td class="px-6 whitespace-nowrap text-sm max-w-sm font-medium truncate text-gray-900">{{ $post->title }}</td>
+    <td class="px-6 text-sm text-gray-500 max-w-md truncate">{{ $post->content }}</td>
+    <td class="px-6 whitespace-nowrap text-right flex items-center text-sm font-medium">
         {{ $slots["edit"] }}
         <button
             class="text-red-600 hover:text-red-900 p-1"
