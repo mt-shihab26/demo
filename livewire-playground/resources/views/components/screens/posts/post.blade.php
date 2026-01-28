@@ -11,12 +11,7 @@ new class extends Component
 
 <tr class="hover:bg-gray-50">
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        <input
-            type="checkbox"
-            wire:model="$parent.selected"
-            value="{{ $post->id }}"
-            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-        />
+        <x-table.checkbox  :value="$post->id" model="$parent.selected" />
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
         {{ $post->id }}

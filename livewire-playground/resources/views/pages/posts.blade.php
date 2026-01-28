@@ -17,7 +17,7 @@ new #[Lazy] class extends Component
 
     public function deleteSelected()
     {
-        Post::query()->whereIn($this->selected)->delete();
+        Post::query()->whereIn('id', $this->selected)->delete();
     }
 
     public function render()
@@ -82,7 +82,12 @@ new #[Lazy] class extends Component
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <x-table.checkbox
+                            x-on:click="$wire.selected = $wire.selected.length === {{ $posts->count() }} ? [] : {{ $posts->pluck('id') }}"
+                            x-bind:checked="$wire.selected.length === {{ $posts->count() }}"
+                        />
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
