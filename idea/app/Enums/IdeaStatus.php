@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum IdeaStatus: string
@@ -11,7 +13,7 @@ enum IdeaStatus: string
     /**
      * Get associated label for specific status
      */
-    public function label()
+    public function label(): string
     {
         return match ($this) {
             self::PENDING => 'Pending',
