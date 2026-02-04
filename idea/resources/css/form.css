@@ -1,82 +1,51 @@
 label {
-    color: var(--color-foreground);
+    @apply text-foreground;
 }
 
 .input {
-    border-radius: var(--radius-md);
-    height: calc(var(--spacing) * 10);
-    width: 100%;
-    border-width: 1px;
-    border-color: var(--color-border);
-    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
-    background-color: var(--color-card);
-    color: var(--color-foreground);
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+    @apply h-[calc(var(--spacing)*10)] w-full rounded-[var(--radius-md)] border border-border bg-card px-[calc(var(--spacing)*3)] py-[calc(var(--spacing)*2)] text-foreground outline-2 outline-transparent outline-offset-2;
 }
 
 .input::placeholder {
-    color: var(--color-muted-foreground);
+    @apply text-muted-foreground;
 }
 
 .input:focus-visible {
-    outline: 0;
     box-shadow:
         0 0 0 calc(var(--spacing) * .5) var(--color-background)
         0 0 0 calc(var(--spacing) * 1) var(--color-primary);
+    @apply outline-0;
 }
 
 @media (min-width: var(--breakpoint-md)) {
     .input {
-        font-size: var(--text-sm);
+        @apply text-sm;
     }
 }
 
 .textarea {
-    border-radius: var(--radius-md);
-    height: calc(var(--spacing) * 40);
-    width: 100%;
-    border-width: 1px;
-    border-color: var(--color-border);
-    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
-    background-color: var(--color-card);
-    color: var(--color-foreground);
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+    @apply h-[calc(var(--spacing)*40)] w-full rounded-[var(--radius-md)] border border-border bg-card px-[calc(var(--spacing)*3)] py-[calc(var(--spacing)*2)] text-foreground outline-2 outline-transparent outline-offset-2;
 }
 
 .textarea::placeholder {
-    color: var(--color-muted-foreground);
+    @apply text-muted-foreground;
 }
 
 .textarea:focus-visible {
-    outline: 0;
     box-shadow:
         0 0 0 calc(var(--spacing) * .5) var(--color-background)
         0 0 0 calc(var(--spacing) * 1) var(--color-primary);
+    @apply outline-0;
 }
 
 .label {
-    display: block;
-    font-size: var(--text-sm);
+    @apply block text-sm;
 }
 
 input[type=file] {
-    display: block;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: var(--color-foreground);
+    @apply block w-full text-sm text-foreground;
 }
 
 input[type=file]::file-selector-button {
-    margin-right: calc(var(--spacing) * 4);
-    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
-    border-radius: calc(var(--spacing) * 2);
-    border-width: 0;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    background-color: var(--color-primary);
-    color: rgb(var(--color-background));
+    @apply mr-[calc(var(--spacing)*4)] rounded-[calc(var(--spacing)*2)] border-0 bg-primary px-[calc(var(--spacing)*4)] py-[calc(var(--spacing)*2)] text-sm font-medium text-background;
 }
