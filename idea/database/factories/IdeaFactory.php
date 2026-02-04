@@ -19,7 +19,7 @@ class IdeaFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()?->id,
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
             'title' => fake()->sentence(),
             'description' => fake()->optional()->paragraph(),
             'links' => collect(range(1, fake()->numberBetween(0, 4)))->map(fn () => fake()->url()),

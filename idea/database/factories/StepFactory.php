@@ -20,7 +20,7 @@ class StepFactory extends Factory
         return [
             'idea_id' => Idea::inRandomOrder()->first()?->id,
             'description' => fake()->sentence(),
-            'completed' => fake()->optional(),
+            'completed' => fake()->boolean(),
         ];
     }
 }
