@@ -8,7 +8,7 @@
 </head>
 <body class="bg-background text-foreground">
     <x-header />
-    <main class="max-w-7xl mx-auto px-6 pb-10">
+    <main class="max-w-7xl min-h-[calc(100svh-4.5rem)] mx-auto px-6">
         {{ $slot }}
     </main>
 </body>
