@@ -32,9 +32,9 @@
             </div>
 
             <div class="space-y-2">
-                <label for="password_confirm" class="label">Password Again</label>
-                <input id="password_confirm" name="password_confirm" type="password" class="input" autocomplete="off" />
-                @error("password_confirm")
+                <label for="password_confirmation" class="label">Password Again</label>
+                <input id="password_confirmation" name="password_confirmation" type="password" class="input" autocomplete="off" />
+                @error("password_confirmation")
                     <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
