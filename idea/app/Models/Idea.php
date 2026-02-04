@@ -63,7 +63,7 @@ class Idea extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

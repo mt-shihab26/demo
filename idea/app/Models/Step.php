@@ -51,6 +51,6 @@ class Step extends Model
      */
     public function idea(): BelongsTo
     {
-        return $this->belongTo(Idea::class);
+        return $this->belongsTo(Idea::class);
     }
 }
