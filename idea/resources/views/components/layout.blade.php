@@ -1,3 +1,5 @@
+@props(["class" => ""])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -8,8 +10,10 @@
 </head>
 <body class="bg-background text-foreground">
     <x-header />
-    <main class="max-w-7xl min-h-[calc(100svh-4.5rem)] mx-auto px-6">
-        {{ $slot }}
+    <main class="max-w-7xl mx-auto px-6">
+        <div class="flex min-h-[calc(100svh-4rem-1px)] items-center justify-center {{ $class }}">
+            {{ $slot }}
+        </div>
     </main>
 </body>
 </html>
