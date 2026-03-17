@@ -125,20 +125,29 @@ fn wrap_messages(messages: &[String], width: usize) -> Vec<String> {
     let mut new_messages: Vec<String> = vec![];
 
     for message in messages.iter() {
-        let mut remaining = message.as_str();
-
-        while remaining.len() > width {
-            let (chunk, left) = remaining.split_at(width);
-            new_messages.push(chunk.to_string());
-            remaining = left
-        }
-
-        if !remaining.is_empty() {
-            new_messages.push(remaining.to_string());
-        }
+        let parts = wrap_message(message, width);
+        new_messages.extend(parts);
     }
 
     new_messages
+}
+
+fn wrap_message(message: &String, width: usize) -> Vec<String> {
+    let mut parts: Vec<String> = vec![];
+
+    let mut remaining = message.as_str();
+
+    while remaining.len() > width {
+        let (chunk, left) = remaining.split_at(width);
+        parts.push(chunk.to_string());
+        remaining = left
+    }
+
+    if !remaining.is_empty() {
+        parts.push(remaining.to_string());
+    }
+
+    parts
 }
 
 fn skip_messages(messages: &[String], height: usize) -> &[String] {
