@@ -124,7 +124,7 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let chat_first_row = 3;
+        let chat_first_row = 2;
         let chat_last_row = self.height - 3;
 
         let mut row = chat_last_row;
@@ -137,7 +137,7 @@ impl App {
             .queue(MoveTo(0, 0))?
             .queue(Print(format!("Cursor: {} Index: {}", self.cursor, index)))?;
 
-        while row > chat_first_row && index > 0 {
+        while row >= chat_first_row && index > 0 {
             index -= 1;
 
             if row != chat_last_row {
@@ -149,7 +149,7 @@ impl App {
             let parts = wrap_message(&message.content, self.width as usize);
 
             for part in parts.iter().rev() {
-                if row == 0 {
+                if row <= chat_first_row {
                     break;
                 }
 
@@ -158,7 +158,7 @@ impl App {
                 row -= 1;
             }
 
-            if row == chat_first_row {
+            if row < chat_first_row {
                 break;
             }
 
