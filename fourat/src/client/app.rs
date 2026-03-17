@@ -112,9 +112,14 @@ impl App {
 
         while row > 0 && index > 0 {
             index -= 1;
+            let message = &self.messages[index];
+
+            // self.stdout
+            //     .queue(MoveTo(0, row))?
+            //     .queue(Print(&message.user))?;
+
             row -= 1;
 
-            let message = &self.messages[index];
             let parts = wrap_message(&message.content, self.width as usize);
 
             for part in parts.iter().rev() {
