@@ -8,7 +8,7 @@ use crossterm::{
     QueueableCommand,
     cursor::MoveTo,
     event::{self, Event, KeyCode, KeyEventKind},
-    style::{PrintStyledContent, Stylize},
+    style::{Print, PrintStyledContent, Stylize},
     terminal::{self, Clear, ClearType},
 };
 
@@ -75,7 +75,9 @@ impl App {
             }
         }
 
-        stdout.queue(MoveTo(0, self.height - 1))?;
+        stdout
+            .queue(MoveTo(0, self.height - 1))?
+            .queue(Print(&self.prompt))?;
 
         stdout.flush()?;
 
