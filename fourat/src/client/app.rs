@@ -86,10 +86,24 @@ impl App {
     }
 
     fn render_frame(&mut self) -> Result<()> {
-        let stdout = &mut self.stdout;
+        self.stdout.queue(Clear(ClearType::All))?;
 
-        stdout.queue(Clear(ClearType::All))?;
+        self.render_messages()?;
 
+        self.stdout
+            .queue(MoveTo(0, self.height - 2))?
+            .queue(Print("─".repeat(self.width as usize)))?;
+
+        self.stdout
+            .queue(MoveTo(0, self.height - 1))?
+            .queue(Print(&self.prompt))?;
+
+        self.stdout.flush()?;
+
+        Ok(())
+    }
+
+    fn render_messages(&mut self) -> Result<()> {
         for (index, message) in self
             .messages
             .iter()
@@ -101,20 +115,10 @@ impl App {
             )
             .enumerate()
         {
-            stdout
+            self.stdout
                 .queue(MoveTo(0, index as u16))?
                 .queue(Print(message))?;
         }
-
-        stdout
-            .queue(MoveTo(0, self.height - 2))?
-            .queue(Print("─".repeat(self.width as usize)))?;
-
-        stdout
-            .queue(MoveTo(0, self.height - 1))?
-            .queue(Print(&self.prompt))?;
-
-        stdout.flush()?;
 
         Ok(())
     }
