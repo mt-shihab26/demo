@@ -5,11 +5,11 @@ use std::{
 };
 
 use crossterm::{
-    QueueableCommand,
+    ExecutableCommand, QueueableCommand,
     cursor::MoveTo,
     event::{self, Event, KeyCode, KeyEventKind, KeyModifiers},
     style::{Print, PrintStyledContent, Stylize},
-    terminal::{self, Clear, ClearType},
+    terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
 
 pub struct App {
@@ -22,8 +22,6 @@ pub struct App {
 
 impl App {
     pub fn new() -> Result<Self> {
-        terminal::enable_raw_mode()?;
-
         let (width, height) = terminal::size()?;
 
         Ok(Self {
@@ -36,6 +34,9 @@ impl App {
     }
 
     pub fn run(&mut self) -> Result<()> {
+        terminal::enable_raw_mode()?;
+        self.stdout.execute(EnterAlternateScreen)?;
+
         while self.alive {
             while event::poll(Duration::ZERO)? {
                 self.handle_events()?;
@@ -43,6 +44,9 @@ impl App {
             self.render_frame()?;
             thread::sleep(Duration::from_millis(33));
         }
+
+        terminal::disable_raw_mode()?;
+        self.stdout.execute(LeaveAlternateScreen)?;
 
         Ok(())
     }
