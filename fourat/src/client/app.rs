@@ -142,7 +142,7 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let chat_first_row = 2;
+        let chat_first_row = 3;
         let chat_last_row = self.height - 3;
 
         let mut row = chat_last_row;
