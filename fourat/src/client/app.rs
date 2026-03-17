@@ -105,11 +105,12 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let mut row = self.height - 2;
+        let mut row = self.height - 1;
         let mut index = self.messages.len();
 
         while row > 0 && index > 0 {
             index -= 1;
+            row -= 1;
 
             let message = &self.messages[index];
             let parts = wrap_message(message, self.width as usize);
