@@ -109,16 +109,20 @@ impl App {
         let mut index = self.messages.len();
 
         while 0 as usize <= row as usize && 0 as usize <= index as usize {
+            index -= 1;
+
             let message = &self.messages[index];
             let parts = wrap_message(message, self.width as usize);
 
             for part in parts.iter() {
                 self.stdout.queue(MoveTo(0, row))?.queue(Print(part))?;
 
+                if row == 0 {
+                    break;
+                }
+
                 row -= 1;
             }
-
-            index -= 1;
         }
 
         Ok(())
