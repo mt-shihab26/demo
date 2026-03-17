@@ -65,29 +65,35 @@ impl App {
                 self.height = height;
             }
             Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
-                match key_event.code {
-                    KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
-                        self.alive = false;
-                    }
-                    KeyCode::Char('k') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
-                        self.cursor += 1;
-                    }
-                    KeyCode::Char('j') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
-                        self.cursor -= 1;
-                    }
-                    KeyCode::Backspace => {
-                        self.prompt.pop();
-                    }
-                    KeyCode::Char(char) => {
-                        self.prompt.push(char);
-                    }
-                    KeyCode::Enter => {
-                        if self.prompt.len() > 0 {
-                            self.messages.push(Message::new("Me", &self.prompt));
-                            self.prompt.clear();
+                if key_event.modifiers.contains(KeyModifiers::CONTROL) {
+                    match key_event.code {
+                        KeyCode::Char('c') => {
+                            self.alive = false;
                         }
+                        KeyCode::Char('k') => {
+                            self.cursor += 1;
+                        }
+                        KeyCode::Char('j') => {
+                            self.cursor -= 1;
+                        }
+                        _ => (),
                     }
-                    _ => (),
+                } else {
+                    match key_event.code {
+                        KeyCode::Backspace => {
+                            self.prompt.pop();
+                        }
+                        KeyCode::Char(char) => {
+                            self.prompt.push(char);
+                        }
+                        KeyCode::Enter => {
+                            if self.prompt.len() > 0 {
+                                self.messages.push(Message::new("Me", &self.prompt));
+                                self.prompt.clear();
+                            }
+                        }
+                        _ => (),
+                    }
                 }
             }
             _ => (),
