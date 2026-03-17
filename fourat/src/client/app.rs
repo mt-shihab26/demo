@@ -13,13 +13,15 @@ use crossterm::{
     terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
 
+use crate::client::message::{self, Message};
+
 pub struct App {
     alive: bool,
     stdout: io::Stdout,
     width: u16,
     height: u16,
     prompt: String,
-    messages: Vec<String>,
+    messages: Vec<Message>,
 }
 
 impl App {
@@ -32,7 +34,7 @@ impl App {
             width,
             height,
             prompt: "".to_string(),
-            messages: vec![],
+            messages: message::fake_messages(),
         })
     }
 
@@ -73,7 +75,7 @@ impl App {
                     }
                     KeyCode::Enter => {
                         if self.prompt.len() > 0 {
-                            self.messages.push(self.prompt.clone());
+                            self.messages.push(Message::new("Me", &self.prompt));
                             self.prompt.clear();
                         }
                     }
@@ -113,7 +115,7 @@ impl App {
             row -= 1;
 
             let message = &self.messages[index];
-            let parts = wrap_message(message, self.width as usize);
+            let parts = wrap_message(&message.content, self.width as usize);
 
             for part in parts.iter().rev() {
                 if row == 0 {
