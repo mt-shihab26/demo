@@ -105,23 +105,27 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let messages = wrap_messages(&self.messages, self.width as usize);
-        let messages = skip_messages(&messages, self.height as usize);
+        let mut row = self.height - 2;
+        let mut index = self.messages.len();
 
-        let mut index = 0;
+        while 0 as usize <= row as usize && 0 as usize <= index as usize {
+            let message = &self.messages[index];
+            let parts = wrap_message(message, self.width as usize);
 
-        for message in messages.iter() {
-            self.stdout
-                .queue(MoveTo(0, index as u16))?
-                .queue(Print(message))?;
-            index += 1;
+            for part in parts.iter() {
+                self.stdout.queue(MoveTo(0, row))?.queue(Print(part))?;
+
+                row -= 1;
+            }
+
+            index -= 1;
         }
 
         Ok(())
     }
 }
 
-fn wrap_messages(messages: &[String], width: usize) -> Vec<String> {
+fn _wrap_messages(messages: &[String], width: usize) -> Vec<String> {
     let mut new_messages: Vec<String> = vec![];
 
     for message in messages.iter() {
