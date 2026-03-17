@@ -5,7 +5,7 @@ use std::{
 };
 
 use crossterm::{
-    ExecutableCommand, QueueableCommand, cursor,
+    QueueableCommand, cursor,
     event::{self, Event},
     style::{self, Stylize},
     terminal,
