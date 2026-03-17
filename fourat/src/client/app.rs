@@ -65,44 +65,38 @@ impl App {
                 self.height = height;
             }
             Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
-                if key_event.modifiers.contains(KeyModifiers::CONTROL) {
-                    match key_event.code {
-                        KeyCode::Char('c') => {
-                            self.alive = false;
-                        }
-                        KeyCode::Char('k') => {
-                            let max_cursor = if self.messages.len() > 0 {
-                                (self.messages.len() - 1) as u16
-                            } else {
-                                0
-                            };
-                            if self.cursor < max_cursor {
-                                self.cursor += 1;
-                            }
-                        }
-                        KeyCode::Char('j') => {
-                            if self.cursor > 0 {
-                                self.cursor -= 1;
-                            }
-                        }
-                        _ => (),
+                match key_event.code {
+                    KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
+                        self.alive = false;
                     }
-                } else {
-                    match key_event.code {
-                        KeyCode::Backspace => {
-                            self.prompt.pop();
+                    KeyCode::Up => {
+                        let max_cursor = if self.messages.len() > 0 {
+                            (self.messages.len() - 1) as u16
+                        } else {
+                            0
+                        };
+                        if self.cursor < max_cursor {
+                            self.cursor += 1;
                         }
-                        KeyCode::Char(char) => {
-                            self.prompt.push(char);
-                        }
-                        KeyCode::Enter => {
-                            if self.prompt.len() > 0 {
-                                self.messages.push(Message::new("Me", &self.prompt));
-                                self.prompt.clear();
-                            }
-                        }
-                        _ => (),
                     }
+                    KeyCode::Down => {
+                        if self.cursor > 0 {
+                            self.cursor -= 1;
+                        }
+                    }
+                    KeyCode::Backspace => {
+                        self.prompt.pop();
+                    }
+                    KeyCode::Char(char) if !key_event.modifiers.contains(KeyModifiers::CONTROL) => {
+                        self.prompt.push(char);
+                    }
+                    KeyCode::Enter => {
+                        if self.prompt.len() > 0 {
+                            self.messages.push(Message::new("Me", &self.prompt));
+                            self.prompt.clear();
+                        }
+                    }
+                    _ => (),
                 }
             }
             _ => (),
@@ -130,10 +124,12 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let chat_height = self.height - 3;
+        let chat_height = self.height - 4;
 
         let mut row = chat_height;
+
         let cursor_offset = (self.cursor as usize).min(self.messages.len());
+
         let mut index = self.messages.len().saturating_sub(cursor_offset);
 
         self.stdout
