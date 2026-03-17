@@ -6,7 +6,7 @@ use std::{
 
 use crossterm::{
     QueueableCommand,
-    cursor::MoveTo,
+    cursor::{Hide, MoveTo},
     event::{self, Event},
     style::{PrintStyledContent, Stylize},
     terminal::{self, Clear, ClearType},
@@ -55,13 +55,14 @@ impl App {
 
     fn render_frame(&mut self) -> Result<()> {
         self.stdout.queue(Clear(ClearType::All))?;
+        self.stdout.queue(Hide)?;
 
         for y in 0..self.height {
             for x in 0..self.width {
                 if y == 0 || y == self.height - 1 || x == 0 || x == self.width - 1 {
                     self.stdout
                         .queue(MoveTo(x, y))?
-                        .queue(PrintStyledContent("█".magenta()))?;
+                        .queue(PrintStyledContent(".".magenta()))?;
                 }
             }
         }
