@@ -1,6 +1,7 @@
-use fake::faker::lorem::en::Sentence;
-use fake::faker::name::en::Name;
-use fake::{Dummy, Fake, Faker};
+use fake::{
+    Dummy, Fake, Faker,
+    faker::{lorem::en::Sentence, name::en::Name},
+};
 
 #[derive(Debug, Dummy)]
 pub struct Message {

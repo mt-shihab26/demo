@@ -107,18 +107,14 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let mut row = self.height - 1;
+        let mut row = self.height - 3;
         let mut index = self.messages.len();
 
         while row > 0 && index > 0 {
             index -= 1;
-            let message = &self.messages[index];
-
-            // self.stdout
-            //     .queue(MoveTo(0, row))?
-            //     .queue(Print(&message.user))?;
-
             row -= 1;
+
+            let message = &self.messages[index];
 
             let parts = wrap_message(&message.content, self.width as usize);
 
@@ -127,10 +123,20 @@ impl App {
                     break;
                 }
 
-                row -= 1;
-
                 self.stdout.queue(MoveTo(0, row))?.queue(Print(part))?;
+
+                row -= 1;
             }
+
+            if row == 0 {
+                break;
+            }
+
+            self.stdout
+                .queue(MoveTo(0, row))?
+                .queue(Print(format!("{}:", message.user)))?;
+
+            row -= 1;
         }
 
         Ok(())
