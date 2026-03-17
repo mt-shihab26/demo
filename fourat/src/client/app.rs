@@ -2,6 +2,7 @@ use std::{
     io::{self, Result, Write},
     thread,
     time::Duration,
+    vec,
 };
 
 use crossterm::{
@@ -104,11 +105,13 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
+        let renderable_messages = wrap_messages(&self.messages, self.width as usize);
+
         for (index, message) in self
             .messages
             .iter()
             .skip(
-                self.messages
+                renderable_messages
                     .len()
                     .checked_sub(self.height as usize - 2)
                     .unwrap_or(0),
@@ -122,4 +125,24 @@ impl App {
 
         Ok(())
     }
+}
+
+fn wrap_messages(messages: &[String], width: usize) -> Vec<String> {
+    let mut renderable_messages: Vec<String> = vec![];
+
+    for message in messages.iter() {
+        let mut remaining = message.as_str();
+
+        while remaining.len() > width {
+            let (chunk, left) = remaining.split_at(width);
+            renderable_messages.push(chunk.to_string());
+            remaining = left
+        }
+
+        if !remaining.is_empty() {
+            renderable_messages.push(remaining.to_string());
+        }
+    }
+
+    return renderable_messages;
 }
