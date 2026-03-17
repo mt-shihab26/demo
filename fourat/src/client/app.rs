@@ -18,6 +18,7 @@ pub struct App {
     width: u16,
     height: u16,
     prompt: String,
+    messages: Vec<String>,
 }
 
 impl App {
@@ -30,6 +31,7 @@ impl App {
             width,
             height,
             prompt: "".to_string(),
+            messages: vec![],
         })
     }
 
@@ -67,6 +69,10 @@ impl App {
                     }
                     KeyCode::Char(char) => {
                         self.prompt.push(char);
+                    }
+                    KeyCode::Enter => {
+                        self.messages.push(self.prompt.clone());
+                        self.prompt.clear();
                     }
                     _ => (),
                 }
