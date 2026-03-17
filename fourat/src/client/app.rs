@@ -69,6 +69,12 @@ impl App {
                     KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
                         self.alive = false;
                     }
+                    KeyCode::Char('k') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
+                        self.cursor += 1;
+                    }
+                    KeyCode::Char('j') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
+                        self.cursor -= 1;
+                    }
                     KeyCode::Backspace => {
                         self.prompt.pop();
                     }
@@ -113,6 +119,8 @@ impl App {
 
         let mut row = chat_height;
         let mut index = self.messages.len() - (self.cursor as usize);
+
+        self.stdout.queue(Print(&self.cursor.to_string()))?;
 
         while row > 0 && index > 0 {
             index -= 1;
