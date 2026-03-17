@@ -69,7 +69,7 @@ impl App {
                     KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
                         self.alive = false;
                     }
-                    KeyCode::Up => {
+                    KeyCode::Up if key_event.modifiers.contains(KeyModifiers::SHIFT) => {
                         let max_cursor = if self.messages.len() > 0 {
                             (self.messages.len() - 1) as u16
                         } else {
@@ -79,7 +79,7 @@ impl App {
                             self.cursor += 1;
                         }
                     }
-                    KeyCode::Down => {
+                    KeyCode::Down if key_event.modifiers.contains(KeyModifiers::SHIFT) => {
                         if self.cursor > 0 {
                             self.cursor -= 1;
                         }
