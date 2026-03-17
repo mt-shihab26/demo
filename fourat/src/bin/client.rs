@@ -1,15 +1,24 @@
-use std::{thread, time::Duration};
+use std::{
+    io::{self, Write},
+    thread,
+    time::Duration,
+};
 
-use crossterm::{event, terminal};
+use crossterm::{
+    QueueableCommand,
+    event::{self, Event},
+    style, terminal,
+};
 
 fn main() {
+    let mut stdout = io::stdout();
     let (mut width, mut height) = terminal::size().unwrap();
 
     loop {
         while event::poll(Duration::ZERO).unwrap() {
             handle_events(&mut width, &mut height);
         }
-        render_frame();
+        render_frame(&mut stdout);
 
         thread::sleep(Duration::from_millis(33));
     }
@@ -17,15 +26,16 @@ fn main() {
 
 fn handle_events(width: &mut u16, height: &mut u16) {
     match event::read().unwrap() {
-        event::Event::Resize(w, h) => {
+        Event::Resize(w, h) => {
             *width = w;
             *height = h;
         }
-        event::Event::Key(_) => todo!(),
+        Event::Key(_) => todo!(),
         _ => (),
     }
 }
 
-fn render_frame() {
-    //
+fn render_frame(stdout: &mut io::Stdout) {
+    stdout.queue(style::Print("Hello")).unwrap();
+    stdout.flush().unwrap();
 }
