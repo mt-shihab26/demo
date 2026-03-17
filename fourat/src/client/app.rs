@@ -63,7 +63,7 @@ impl App {
                 if y == self.height - 2 {
                     stdout
                         .queue(MoveTo(x, y))?
-                        .queue(PrintStyledContent(".".magenta()))?;
+                        .queue(PrintStyledContent("─".magenta()))?;
                 }
             }
         }
