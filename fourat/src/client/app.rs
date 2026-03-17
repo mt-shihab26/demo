@@ -71,10 +71,19 @@ impl App {
                             self.alive = false;
                         }
                         KeyCode::Char('k') => {
-                            self.cursor += 1;
+                            let max_cursor = if self.messages.len() > 0 {
+                                (self.messages.len() - 1) as u16
+                            } else {
+                                0
+                            };
+                            if self.cursor < max_cursor {
+                                self.cursor += 1;
+                            }
                         }
                         KeyCode::Char('j') => {
-                            self.cursor -= 1;
+                            if self.cursor > 0 {
+                                self.cursor -= 1;
+                            }
                         }
                         _ => (),
                     }
@@ -124,9 +133,12 @@ impl App {
         let chat_height = self.height - 3;
 
         let mut row = chat_height;
-        let mut index = self.messages.len() - (self.cursor as usize);
+        let cursor_offset = (self.cursor as usize).min(self.messages.len());
+        let mut index = self.messages.len().saturating_sub(cursor_offset);
 
-        self.stdout.queue(Print(&self.cursor.to_string()))?;
+        self.stdout
+            .queue(MoveTo(0, 0))?
+            .queue(Print(format!("Cursor: {} Index: {}", self.cursor, index)))?;
 
         while row > 0 && index > 0 {
             index -= 1;
