@@ -8,7 +8,7 @@ use std::{
 use crossterm::{
     ExecutableCommand, QueueableCommand,
     cursor::MoveTo,
-    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers},
+    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind},
     style::Print,
     terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
@@ -58,31 +58,44 @@ impl App {
         Ok(())
     }
 
+    fn cursor_up(&mut self) {
+        let max_cursor = if self.messages.len() > 0 {
+            (self.messages.len() - 1) as u16
+        } else {
+            0
+        };
+        if self.cursor < max_cursor {
+            self.cursor += 1;
+        }
+    }
+
+    fn cursor_down(&mut self) {
+        if self.cursor > 0 {
+            self.cursor -= 1;
+        }
+    }
+
     fn handle_events(&mut self) -> Result<()> {
         match event::read()? {
             Event::Resize(width, height) => {
                 self.width = width;
                 self.height = height;
             }
+            Event::Mouse(mouse_event) => match mouse_event.kind {
+                MouseEventKind::ScrollUp => self.cursor_up(),
+                MouseEventKind::ScrollDown => self.cursor_down(),
+                _ => (),
+            },
             Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
                 match key_event.code {
                     KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
                         self.alive = false;
                     }
                     KeyCode::Up if key_event.modifiers.contains(KeyModifiers::SHIFT) => {
-                        let max_cursor = if self.messages.len() > 0 {
-                            (self.messages.len() - 1) as u16
-                        } else {
-                            0
-                        };
-                        if self.cursor < max_cursor {
-                            self.cursor += 1;
-                        }
+                        self.cursor_up();
                     }
                     KeyCode::Down if key_event.modifiers.contains(KeyModifiers::SHIFT) => {
-                        if self.cursor > 0 {
-                            self.cursor -= 1;
-                        }
+                        self.cursor_down();
                     }
                     KeyCode::Backspace => {
                         self.prompt.pop();
