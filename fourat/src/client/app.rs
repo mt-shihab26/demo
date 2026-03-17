@@ -8,7 +8,10 @@ use std::{
 use crossterm::{
     ExecutableCommand, QueueableCommand,
     cursor::MoveTo,
-    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind, EnableMouseCapture, DisableMouseCapture},
+    event::{
+        self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind, KeyModifiers,
+        MouseEventKind,
+    },
     style::Print,
     terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
@@ -152,7 +155,7 @@ impl App {
             .queue(MoveTo(0, 0))?
             .queue(Print(format!("Cursor: {} Index: {}", self.cursor, index)))?;
 
-        while row >= chat_first_row && index > 0 {
+        while row > chat_first_row && index > 0 {
             index -= 1;
 
             if row != chat_last_row {
@@ -173,7 +176,7 @@ impl App {
                 row -= 1;
             }
 
-            if row < chat_first_row {
+            if row <= chat_first_row {
                 break;
             }
 
