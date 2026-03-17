@@ -7,7 +7,7 @@ use std::{
 use crossterm::{
     QueueableCommand,
     cursor::MoveTo,
-    event::{self, Event},
+    event::{self, Event, KeyCode, KeyEventKind},
     style::{PrintStyledContent, Stylize},
     terminal::{self, Clear, ClearType},
 };
@@ -16,17 +16,18 @@ pub struct App {
     stdout: io::Stdout,
     width: u16,
     height: u16,
+    prompt: String,
 }
 
 impl App {
     pub fn new() -> Result<Self> {
-        let stdout = io::stdout();
         let (width, height) = terminal::size()?;
 
         Ok(Self {
-            stdout,
+            stdout: io::stdout(),
             width,
             height,
+            prompt: "".to_string(),
         })
     }
 
@@ -46,7 +47,13 @@ impl App {
                 self.width = width;
                 self.height = height;
             }
-            Event::Key(_) => todo!(),
+            Event::Key(key_event) => match key_event.code {
+                KeyCode::Char(char) => match key_event.kind {
+                    KeyEventKind::Press => self.prompt.push(char),
+                    _ => (),
+                },
+                _ => (),
+            },
             _ => (),
         }
 
