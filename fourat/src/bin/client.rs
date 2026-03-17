@@ -11,16 +11,15 @@ use crossterm::{
     terminal,
 };
 
-fn main() {
+fn main() -> io::Result<()> {
     let mut stdout = io::stdout();
-    let (mut width, mut height) = terminal::size().unwrap();
+    let (mut width, mut height) = terminal::size()?;
 
     loop {
-        while event::poll(Duration::ZERO).unwrap() {
-            handle_events(&mut width, &mut height).unwrap();
+        while event::poll(Duration::ZERO)? {
+            handle_events(&mut width, &mut height)?;
         }
-        render_frame(&mut stdout).unwrap();
-
+        render_frame(&mut stdout)?;
         thread::sleep(Duration::from_millis(33));
     }
 }
