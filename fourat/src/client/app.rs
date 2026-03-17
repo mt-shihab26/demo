@@ -107,12 +107,17 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let mut row = self.height - 3;
+        let chat_height = self.height - 3;
+
+        let mut row = chat_height;
         let mut index = self.messages.len();
 
         while row > 0 && index > 0 {
             index -= 1;
-            row -= 1;
+
+            if row != chat_height {
+                row -= 1;
+            }
 
             let message = &self.messages[index];
 
