@@ -58,7 +58,7 @@ impl App {
 
         for y in 0..self.height {
             for x in 0..self.width {
-                if (y == 0 || y == self.height - 1) || (x == 0 || x == self.width - 1) {
+                if y == 0 || y == self.height - 1 || x == 0 || x == self.width - 1 {
                     self.stdout
                         .queue(MoveTo(x, y))?
                         .queue(PrintStyledContent("█".magenta()))?;
