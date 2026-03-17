@@ -108,7 +108,7 @@ impl App {
         let mut row = self.height - 2;
         let mut index = self.messages.len();
 
-        while 0 as usize <= row as usize && 0 as usize <= index as usize {
+        while row > 0 && index > 0 {
             index -= 1;
 
             let message = &self.messages[index];
