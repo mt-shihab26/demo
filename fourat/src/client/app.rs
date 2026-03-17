@@ -8,7 +8,7 @@ use crossterm::{
     ExecutableCommand, QueueableCommand,
     cursor::MoveTo,
     event::{self, Event, KeyCode, KeyEventKind, KeyModifiers},
-    style::{Print, PrintStyledContent, Stylize},
+    style::Print,
     terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
 
@@ -71,8 +71,10 @@ impl App {
                         self.prompt.push(char);
                     }
                     KeyCode::Enter => {
-                        self.messages.push(self.prompt.clone());
-                        self.prompt.clear();
+                        if self.prompt.len() > 0 {
+                            self.messages.push(self.prompt.clone());
+                            self.prompt.clear();
+                        }
                     }
                     _ => (),
                 }
@@ -88,15 +90,15 @@ impl App {
 
         stdout.queue(Clear(ClearType::All))?;
 
-        for y in 0..self.height {
-            for x in 0..self.width {
-                if y == self.height - 2 {
-                    stdout
-                        .queue(MoveTo(x, y))?
-                        .queue(PrintStyledContent("─".magenta()))?;
-                }
-            }
+        for (index, message) in self.messages.iter().enumerate() {
+            stdout
+                .queue(MoveTo(0, index as u16 + 2))?
+                .queue(Print(message))?;
         }
+
+        stdout
+            .queue(MoveTo(0, self.height - 2))?
+            .queue(Print("─".repeat(self.width as usize)))?;
 
         stdout
             .queue(MoveTo(0, self.height - 1))?
