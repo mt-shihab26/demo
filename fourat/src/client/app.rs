@@ -144,5 +144,5 @@ fn wrap_messages(messages: &[String], width: usize) -> Vec<String> {
         }
     }
 
-    return renderable_messages;
+    renderable_messages
 }
