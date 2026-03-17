@@ -124,9 +124,10 @@ impl App {
     }
 
     fn render_messages(&mut self) -> Result<()> {
-        let chat_height = self.height - 4;
+        let chat_first_row = 3;
+        let chat_last_row = self.height - 3;
 
-        let mut row = chat_height;
+        let mut row = chat_last_row;
 
         let cursor_offset = (self.cursor as usize).min(self.messages.len());
 
@@ -136,10 +137,10 @@ impl App {
             .queue(MoveTo(0, 0))?
             .queue(Print(format!("Cursor: {} Index: {}", self.cursor, index)))?;
 
-        while row > 0 && index > 0 {
+        while row > chat_first_row && index > 0 {
             index -= 1;
 
-            if row != chat_height {
+            if row != chat_last_row {
                 row -= 1;
             }
 
@@ -157,7 +158,7 @@ impl App {
                 row -= 1;
             }
 
-            if row == 0 {
+            if row == chat_first_row {
                 break;
             }
 
