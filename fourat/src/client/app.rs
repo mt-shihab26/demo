@@ -130,17 +130,6 @@ impl App {
     }
 }
 
-fn _wrap_messages(messages: &[String], width: usize) -> Vec<String> {
-    let mut new_messages: Vec<String> = vec![];
-
-    for message in messages.iter() {
-        let parts = wrap_message(message, width);
-        new_messages.extend(parts);
-    }
-
-    new_messages
-}
-
 fn wrap_message(message: &String, width: usize) -> Vec<String> {
     let mut parts: Vec<String> = vec![];
 
@@ -157,9 +146,4 @@ fn wrap_message(message: &String, width: usize) -> Vec<String> {
     }
 
     parts
-}
-
-fn skip_messages(messages: &[String], height: usize) -> &[String] {
-    let skip = messages.len().checked_sub(height - 2).unwrap_or(0);
-    &messages[skip..]
 }
