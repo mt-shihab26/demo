@@ -22,6 +22,7 @@ pub struct App {
     height: u16,
     prompt: String,
     messages: Vec<Message>,
+    cursor: u16,
 }
 
 impl App {
@@ -35,6 +36,7 @@ impl App {
             height,
             prompt: "".to_string(),
             messages: message::fake_messages(),
+            cursor: 0,
         })
     }
 
@@ -110,7 +112,7 @@ impl App {
         let chat_height = self.height - 3;
 
         let mut row = chat_height;
-        let mut index = self.messages.len();
+        let mut index = self.messages.len() - (self.cursor as usize);
 
         while row > 0 && index > 0 {
             index -= 1;
