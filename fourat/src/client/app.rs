@@ -115,13 +115,13 @@ impl App {
             let parts = wrap_message(message, self.width as usize);
 
             for part in parts.iter().rev() {
-                self.stdout.queue(MoveTo(0, row))?.queue(Print(part))?;
-
                 if row == 0 {
                     break;
                 }
 
                 row -= 1;
+
+                self.stdout.queue(MoveTo(0, row))?.queue(Print(part))?;
             }
         }
 
