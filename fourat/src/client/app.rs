@@ -1,13 +1,13 @@
 use std::{
     io::{self, Result, Write},
-    thread,
+    process, thread,
     time::Duration,
 };
 
 use crossterm::{
     QueueableCommand,
     cursor::MoveTo,
-    event::{self, Event, KeyCode, KeyEventKind},
+    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers},
     style::{Print, PrintStyledContent, Stylize},
     terminal::{self, Clear, ClearType},
 };
@@ -21,6 +21,8 @@ pub struct App {
 
 impl App {
     pub fn new() -> Result<Self> {
+        terminal::enable_raw_mode()?;
+
         let (width, height) = terminal::size()?;
 
         Ok(Self {
@@ -47,13 +49,20 @@ impl App {
                 self.width = width;
                 self.height = height;
             }
-            Event::Key(key_event) => match key_event.code {
-                KeyCode::Char(char) => match key_event.kind {
-                    KeyEventKind::Press => self.prompt.push(char),
+            Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
+                match key_event.code {
+                    KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
+                        process::exit(0);
+                    }
+                    KeyCode::Backspace => {
+                        self.prompt.pop();
+                    }
+                    KeyCode::Char(char) => {
+                        self.prompt.push(char);
+                    }
                     _ => (),
-                },
-                _ => (),
-            },
+                }
+            }
             _ => (),
         }
 
