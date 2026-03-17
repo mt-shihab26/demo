@@ -92,7 +92,7 @@ impl App {
 
         for (index, message) in self.messages.iter().enumerate() {
             stdout
-                .queue(MoveTo(0, index as u16 + 2))?
+                .queue(MoveTo(0, index as u16))?
                 .queue(Print(message))?;
         }
 
