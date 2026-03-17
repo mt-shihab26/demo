@@ -90,7 +90,17 @@ impl App {
 
         stdout.queue(Clear(ClearType::All))?;
 
-        for (index, message) in self.messages.iter().enumerate() {
+        for (index, message) in self
+            .messages
+            .iter()
+            .skip(
+                self.messages
+                    .len()
+                    .checked_sub(self.height as usize - 2)
+                    .unwrap_or(0),
+            )
+            .enumerate()
+        {
             stdout
                 .queue(MoveTo(0, index as u16))?
                 .queue(Print(message))?;
