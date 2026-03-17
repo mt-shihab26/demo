@@ -8,7 +8,7 @@ use std::{
 use crossterm::{
     ExecutableCommand, QueueableCommand,
     cursor::MoveTo,
-    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind},
+    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers, MouseEventKind, EnableMouseCapture, DisableMouseCapture},
     style::Print,
     terminal::{self, Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
@@ -43,6 +43,7 @@ impl App {
     pub fn run(&mut self) -> Result<()> {
         terminal::enable_raw_mode()?;
         self.stdout.execute(EnterAlternateScreen)?;
+        self.stdout.execute(EnableMouseCapture)?;
 
         while self.alive {
             while event::poll(Duration::ZERO)? {
@@ -52,6 +53,7 @@ impl App {
             thread::sleep(Duration::from_millis(33));
         }
 
+        self.stdout.execute(DisableMouseCapture)?;
         terminal::disable_raw_mode()?;
         self.stdout.execute(LeaveAlternateScreen)?;
 
