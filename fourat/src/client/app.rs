@@ -56,9 +56,9 @@ impl App {
     fn render_frame(&mut self) -> Result<()> {
         self.stdout.queue(Clear(ClearType::All))?;
 
-        for y in 0..40 {
-            for x in 0..150 {
-                if (y == 0 || y == 40 - 1) || (x == 0 || x == 150 - 1) {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                if (y == 0 || y == self.height - 1) || (x == 0 || x == self.width - 1) {
                     self.stdout
                         .queue(MoveTo(x, y))?
                         .queue(PrintStyledContent("█".magenta()))?;
