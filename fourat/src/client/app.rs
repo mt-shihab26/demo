@@ -1,6 +1,6 @@
 use std::{
     io::{self, Result, Write},
-    process, thread,
+    thread,
     time::Duration,
 };
 
@@ -13,6 +13,7 @@ use crossterm::{
 };
 
 pub struct App {
+    alive: bool,
     stdout: io::Stdout,
     width: u16,
     height: u16,
@@ -26,6 +27,7 @@ impl App {
         let (width, height) = terminal::size()?;
 
         Ok(Self {
+            alive: true,
             stdout: io::stdout(),
             width,
             height,
@@ -34,13 +36,15 @@ impl App {
     }
 
     pub fn run(&mut self) -> Result<()> {
-        loop {
+        while self.alive {
             while event::poll(Duration::ZERO)? {
                 self.handle_events()?;
             }
             self.render_frame()?;
             thread::sleep(Duration::from_millis(33));
         }
+
+        Ok(())
     }
 
     fn handle_events(&mut self) -> Result<()> {
@@ -52,7 +56,7 @@ impl App {
             Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
                 match key_event.code {
                     KeyCode::Char('c') if key_event.modifiers.contains(KeyModifiers::CONTROL) => {
-                        process::exit(0);
+                        self.alive = false;
                     }
                     KeyCode::Backspace => {
                         self.prompt.pop();
