@@ -1,14 +1,15 @@
 use std::{
-    io::{self, Write},
+    io::{self, Result, Write},
     thread,
     time::Duration,
 };
 
 use crossterm::{
-    QueueableCommand, cursor,
+    QueueableCommand,
+    cursor::MoveTo,
     event::{self, Event},
-    style::{self, Stylize},
-    terminal,
+    style::{PrintStyledContent, Stylize},
+    terminal::{self, Clear, ClearType},
 };
 
 pub struct App {
@@ -18,7 +19,7 @@ pub struct App {
 }
 
 impl App {
-    pub fn new() -> io::Result<Self> {
+    pub fn new() -> Result<Self> {
         let stdout = io::stdout();
         let (width, height) = terminal::size()?;
 
@@ -29,7 +30,7 @@ impl App {
         })
     }
 
-    pub fn run(&mut self) -> io::Result<()> {
+    pub fn run(&mut self) -> Result<()> {
         loop {
             while event::poll(Duration::ZERO)? {
                 self.handle_events()?;
@@ -39,7 +40,7 @@ impl App {
         }
     }
 
-    fn handle_events(&mut self) -> io::Result<()> {
+    fn handle_events(&mut self) -> Result<()> {
         match event::read()? {
             Event::Resize(width, height) => {
                 self.width = width;
@@ -52,16 +53,15 @@ impl App {
         Ok(())
     }
 
-    fn render_frame(&mut self) -> io::Result<()> {
-        self.stdout
-            .queue(terminal::Clear(terminal::ClearType::All))?;
+    fn render_frame(&mut self) -> Result<()> {
+        self.stdout.queue(Clear(ClearType::All))?;
 
         for y in 0..40 {
             for x in 0..150 {
                 if (y == 0 || y == 40 - 1) || (x == 0 || x == 150 - 1) {
                     self.stdout
-                        .queue(cursor::MoveTo(x, y))?
-                        .queue(style::PrintStyledContent("█".magenta()))?;
+                        .queue(MoveTo(x, y))?
+                        .queue(PrintStyledContent("█".magenta()))?;
                 }
             }
         }
