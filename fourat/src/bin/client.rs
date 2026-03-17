@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::{thread, time::Duration};
 
 use crossterm::{event, terminal};
 
@@ -10,6 +10,8 @@ fn main() {
             handle_events(&mut width, &mut height);
         }
         render_frame();
+
+        thread::sleep(Duration::from_millis(33));
     }
 }
 
